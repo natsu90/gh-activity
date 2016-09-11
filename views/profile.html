@@ -1,0 +1,218 @@
+
+<!doctype html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>Github Activity</title>
+  <base href="/">
+  <link rel="icon" type="image/x-icon" href="favicon.ico">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" type="text/css" href="node_modules/primer-css/build/build.css">
+  <link rel="stylesheet" type="text/css" href="http://primercss.io/docs.css">
+  <link rel="stylesheet" type="text/css" href="profile.css">
+</head>
+<body>
+
+<header class="masthead">
+  <div class="container">
+    <a href="/" class="masthead-logo">
+      <span class="mega-octicon octicon-mark-github"></span>
+    </a>
+    <div class="header-search scoped-search site-scoped-search js-site-search">
+    <form v-on:submit.prevent="getProfile">
+      <label class="form-control header-search-wrapper js-chromeless-input-container" style="padding: 0px">
+        <div class="header-search-scope">Github Username</div>
+        <input type="text" class="form-control header-search-input js-site-search-focus js-site-search-field is-clearable" value="<%= userId %>" v-model="userName" />
+      </label>
+    </form>
+    </div>
+
+    <nav class="masthead-nav">
+      <a class="active" href="/">Home</a>
+    </nav>
+  </div>
+</header>
+<div class="container">
+
+  <message></message>
+
+  <div class="columns doc-layout">
+
+    <profile userid="<%= userId %>"></profile>
+
+    <div class="column three-fourths">
+      <div class="tabnav">
+        <div class="right">
+          <span class="user-following-container">
+            <span class="follow">
+              <periods></periods>
+            </span>
+          </span>
+        </div>
+
+        <nav class="tabnav-tabs" role="navigation">
+          <a href="javascript:void()" class="tabnav-tab selected" aria-selected="true" role="tab">
+            <span class="octicon octicon-diff-added"></span>
+            Contributions
+          </a>
+        </nav>
+      </div>
+
+      <div class="js-repo-filter position-relative">
+        <div class="overview-tab">
+          <contribution userid="<%= userId %>" :period=sharedState.period></contribution>
+
+          <events userid="<%= userId %>" :period=sharedState.period :repoid=sharedState.repoid></events>
+
+        </div><!-- /.overview-tab -->
+      </div>
+    </div>
+  </div>
+  <footer class="footer">
+    Made by <a href="//github.com/natsu90">Mohd Sulaiman</a>. Fork this project on <a href="//github.com/natsu90/gh-activity">Github</a><br>
+    This project is not affiliated with the GitHub, Inc. in any way.
+  </footer>
+</div>
+
+<template id="message">
+  <div class="flash-messages" v-if="sharedState.message">
+    <div class="flash flash-error" v-html="sharedState.message">
+    </div>
+  </div>
+</template>
+
+<template id="profile">
+  <div class="column one-fourth" v-if="user">
+    <a target="blank" :href=user.html_url class="vcard-avatar d-block position-relative"><img alt="" class="avatar rounded-2" height="230" src="{{ user.avatar_url }}&amp;s=460" width="230"></a>
+    <h1 class="vcard-names my-3">
+      <div class="vcard-fullname" v-text="user.name"></div>
+      <div class="vcard-username" v-text="user.login"></div>
+    </h1>
+
+    <ul class="vcard-details border-top border-gray-light py-3">
+      <li class="vcard-detail py-1 css-truncate css-truncate-target" v-if="user.company"><span class="octicon octicon-organization"></span><div v-text="user.company"></div></li>
+      <li class="vcard-detail py-1 css-truncate css-truncate-target" :title=user.location v-if="user.location"><span class="octicon octicon-location"></span>{{ user.location }}</li>
+      <li class="vcard-detail py-1 css-truncate css-truncate-target" v-if="user.email"><span class="octicon octicon-mail"></span><a href="mailto:{{ user.email }}" v-text="user.email"></a></li>
+      <li class="vcard-detail py-1 css-truncate css-truncate-target" v-if="user.blog"><span class="octicon octicon-link"></span><a href="http://namial.us" class="url" rel="nofollow me" v-text="user.blog"></a></li>
+      <li class="vcard-detail py-1 css-truncate css-truncate-target"><span class="octicon octicon-clock"></span><span class="join-label">Joined on </span><local-time class="join-date" :datetime=user.created_at day="numeric" month="short" year="numeric" :title=user.created_at v-text="moment(user.created_at).format('MMM DD, YYYY')"></local-time></li>
+    </ul>
+
+    <div class="vcard-stats border-top border-bottom border-gray-light mb-3 py-3">
+      <a class="vcard-stat" href="javascript:void(0)">
+        <strong class="vcard-stat-count d-block" v-text="user.followers"></strong>
+        <span class="text-muted">Followers</span>
+      </a>
+      <a class="vcard-stat" href="javascript:void(0)">
+        <strong class="vcard-stat-count d-block" v-text="user.following"></strong>
+        <span class="text-muted">Following</span>
+      </a>
+      <a class="vcard-stat" href="javascript:void(0)">
+        <strong class="vcard-stat-count d-block" v-text="user.public_repos"></strong>
+        <span class="text-muted">Repositories</span>
+      </a>
+    </div>
+  </div>
+  <div class="column one-fourth" v-else>
+      <a href="javascript:void(0)" class="vcard-avatar d-block position-relative"><img alt="" class="avatar rounded-2" height="230" src="//placehold.it/460x460" width="230"></a>
+      <h1 class="vcard-names my-3">
+        <div class="vcard-fullname">Anonymous</div>
+        <div class="vcard-username" v-text="userid"></div>
+      </h1>
+  </div>
+</template>
+
+<template id="periods">
+  <form>
+    <label>Filter activity:</label>
+    <select class="form-select select-sm" v-model="sharedState.period">
+      <option v-for="period in periods"  v-bind:value="period.value" v-text="period.text"></option>
+    </select>
+  </form>
+</template>
+
+<template id="contribution">
+  <div class="columns popular-repos">
+    <div class="single-column">
+      <div class="boxed-group flush js-pinned-repos-reorder-container">
+        <h3>
+            Repositories contributed to
+          <img src="https://assets-cdn.github.com/images/spinners/octocat-spinner-32.gif" width="13" class="spinner pinned-repos-spinner js-pinned-repos-spinner" alt="">
+          <span class="pinned-repos-reorder-error js-pinned-repos-reorder-error"></span>
+        </h3>
+        <ul class="boxed-group-inner mini-repo-list js-pinned-repos-reorder-list">
+
+          <repository v-for="repoId in repoIds | orderBy mostStars -1" :repoid=repoId></repository>
+
+        </ul>
+      </div>
+    </div>
+  </div>
+</template>
+
+<template id="repository">
+  <li class="pinned-repo-list-item js-pinned-repo-list-item public source">
+    <span class="repo-icon">
+      <span class="octicon octicon-repo"></span>
+      <!-- <label><input type="checkbox" :value=repoid v-model="sharedState.repoids" /></label> -->
+    </span>
+    <a v-if="repo" target="blank" :href=repo.html_url class="pinned-repo-link css-truncate">
+      <span class="repo-info">
+        <span class="repo-and-owner">
+          <span class="owner js-repo" :title=repo.owner.login v-text="repo.owner.login"></span>/<span class="repo js-repo" :title=repo.name v-text="repo.name"></span>
+        </span>
+        <span class="repo-description" v-text="repo.description"></span>
+      </span>
+      <span class="stars">{{ repo.subscribers_count }} <span class="octicon octicon-eye"></span></span>
+      <span class="stars">{{ repo.stargazers_count }} <span class="octicon octicon-star"></span></span>
+      <span class="stars">{{ repo.forks_count }} <span class="octicon octicon-repo-forked"></span></span>
+    </a>
+    <span v-else href="#" class="pinned-repo-link css-truncate">
+      <span class="repo-info">
+        <span class="repo-and-owner">Repo ID: {{ repoid }}</span>
+      </span>
+    </span>
+  </li>
+</template>
+
+<template id="events">
+  <div id="js-contribution-activity" class="activity-listing contribution-activity">
+    <h2 style="margin-top:0px">Contribution activity</h2>
+    <img alt="" class="contribution-activity-spinner" src="https://assets-cdn.github.com/images/spinners/octocat-spinner-128.gif"/>
+    <div class="contribution-activity-listing">
+      <div class="news public_news">
+          <event v-for="event in events" :event="event"></event>
+          <v-paginator :resource.sync="events" :resource_url=resource_url></v-paginator>
+      </div>
+
+    </div>
+  </div>
+</template>
+
+<template id="event">
+
+  <div class="alert"><div class="body">
+    <span class="mega-octicon dashboard-event-icon octicon-{{ icon }}"></span>
+
+    <div class="time tooltipped tooltipped-e tooltipped-no-delay" :aria-label=event.created_at v-text="past">
+    </div>
+
+    <div class="title" v-html="action"></div>
+
+    <div class="details">
+      <div class="message">
+        <blockquote v-html="detail"></blockquote>
+      </div>
+    </div>
+  </div></div>
+</template>
+
+<script src="node_modules/vue/dist/vue.min.js"></script>
+<script src="node_modules/vue-resource/dist/vue-resource.min.js"></script>
+<script src="node_modules/moment/min/moment.min.js"></script>
+<script src="node_modules/vuejs-paginator/dist/vuejs-paginator.min.js"></script>
+<script src="node_modules/vue-cookie/src/vue-cookie.js"></script>
+<script src="node_modules/marked/marked.min.js"></script>
+<script src="script.js"></script>
+
+</body>
+</html>
