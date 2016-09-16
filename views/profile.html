@@ -1,38 +1,5 @@
 
-<!doctype html>
-<html>
-<head>
-  <meta charset="utf-8">
-  <title>Github Activity</title>
-  <base href="/">
-  <link rel="icon" type="image/x-icon" href="favicon.ico">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <link rel="stylesheet" type="text/css" href="node_modules/primer-css/build/build.css">
-  <link rel="stylesheet" type="text/css" href="http://primercss.io/docs.css">
-  <link rel="stylesheet" type="text/css" href="profile.css">
-</head>
-<body>
-
-<header class="masthead">
-  <div class="container">
-    <a href="/" class="masthead-logo">
-      <span class="mega-octicon octicon-mark-github"></span>
-    </a>
-    <div class="header-search scoped-search site-scoped-search js-site-search">
-    <form v-on:submit.prevent="getProfile">
-      <label class="form-control header-search-wrapper js-chromeless-input-container" style="padding: 0px">
-        <div class="header-search-scope">Github Username</div>
-        <input type="text" class="form-control header-search-input js-site-search-focus js-site-search-field is-clearable" value="<%= userId %>" v-model="userName" />
-      </label>
-    </form>
-    </div>
-
-    <nav class="masthead-nav">
-      <a class="active" href="/">Home</a>
-    </nav>
-  </div>
-</header>
-<div class="container">
+<% include head.html %>
 
   <message></message>
 
@@ -68,10 +35,8 @@
       </div>
     </div>
   </div>
-  <footer class="footer">
-    Made by <a href="//github.com/natsu90">Mohd Sulaiman</a>. Fork this project on <a href="//github.com/natsu90/gh-activity">Github</a><br>
-    This project is not affiliated with the GitHub, Inc. in any way.
-  </footer>
+  
+  <% include footer.html %>
 </div>
 
 <template id="message">

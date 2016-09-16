@@ -1,0 +1,29 @@
+
+<% include head.html %>
+
+<div class="blankslate blankslate-large">
+  <span class="mega-octicon octicon-eye blankslate-icon"></span>
+  <span class="mega-octicon octicon-star blankslate-icon"></span>
+  <span class="mega-octicon octicon-repo-forked blankslate-icon"></span>
+  <h3>GitHub contribution shown right.</h3>
+  <p>Show correctly your open-source contributions from GitHub activity.</p>
+</div>
+
+  <% include footer.html %>
+</div>
+
+<script src="node_modules/vue/dist/vue.min.js"></script>
+<script src="node_modules/vue-resource/dist/vue-resource.min.js"></script>
+<script type="text/javascript">
+  new Vue({
+  el: 'body',
+  methods: {
+    getProfile: function() {
+      if (this.userName)
+        window.location = '/'+ this.userName;
+    }
+  }
+});
+</script>
+</body>
+</html>

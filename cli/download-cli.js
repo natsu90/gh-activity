@@ -23,11 +23,6 @@ var argv = require('minimist')(process.argv.slice(2)),
 		charset         : 'utf8mb4'
 	};
 
-/*timeline.seed(argv.file, dbDetail, function(err) {
-	if (err) throw err;
-	process.exit(0);
-});*/
-
 async.waterfall([
 	function(callback) {
 		timeline.download(argv.folder, callback);

@@ -2,7 +2,6 @@
 var appRoot = require('app-root-path');
 require('dotenv').config({path: appRoot + '/.env'});
 var argv = require('minimist')(process.argv.slice(2)),
-	async = require('async'),
 	timeline = require('../github/github-timeline')
 	(
 		process.env.GOOGLE_PROJECT_ID, 
@@ -28,20 +27,8 @@ var argv = require('minimist')(process.argv.slice(2)),
 	process.exit(0);
 });*/
 
-async.waterfall([
-	function(callback) {
-		timeline.startQuery(argv.from, argv.to, callback);
-	},
-	function(tableName, callback) {
-		timeline.exportQuery(tableName, callback);
-	},
-	function(tableName, callback) {
-		timeline.download(tableName, callback);
-	},
-	function(fileNames, callback) {
-		timeline.importData(fileNames, dbDetail, callback);
-	}
-], function(err) {
+timeline.importQuery(argv.from, argv.to, dbDetail, function(err) {
+
 	if (err) throw err;
 	console.log('import done');
 	process.exit(0);

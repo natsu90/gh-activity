@@ -21,9 +21,9 @@
     "vue": "^1.0.10",
     "vue-cookie": "^1.0.0",
     "vue-resource": "^0.1.17",
-    "vuejs-paginator": "git+https://github.com/natsu90/vuejs-paginator.git#master"
+    "vuejs-paginator": "^1.0.15"
   },
   "scripts": {
-    "postinstall": ""
+    "start": "node index.js"
   }
 }

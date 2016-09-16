@@ -91,7 +91,8 @@ app.get('/:userId', function(req, res) {
 });
 
 app.get('/', function (req, res) {
-  res.send('GET request to the homepage');
+  //res.send('GET request to the homepage');
+  res.render('home');
 });
 
 app.use('/api/v1', router);

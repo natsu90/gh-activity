@@ -1,0 +1,36 @@
+
+<!doctype html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>Github Activity</title>
+  <base href="/">
+  <link rel="icon" type="image/x-icon" href="favicon.ico">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" type="text/css" href="node_modules/primer-css/build/build.css">
+  <link rel="stylesheet" type="text/css" href="http://primercss.io/docs.css">
+  <link rel="stylesheet" type="text/css" href="profile.css">
+</head>
+<body>
+
+<header class="masthead" style="background-color: #f8f8f8; border: 1px solid #e7e7e7;">
+  <div class="container">
+    <a href="/" class="masthead-logo">
+      <span class="mega-octicon octicon-mark-github" style="color:#000"></span>
+    </a>
+    <div class="header-search scoped-search site-scoped-search js-site-search">
+    <form v-on:submit.prevent="getProfile">
+      <label class="form-control header-search-wrapper js-chromeless-input-container" style="padding: 0px;">
+        <div class="header-search-scope">Github Username</div>
+        <input type="text" class="form-control header-search-input js-site-search-focus js-site-search-field is-clearable" value="<%= typeof userId !== 'undefined' ? userId : '' %>" placeholder="type then hit Enter" v-model="userName" style="border: 1px #ddd;" />
+      </label>
+    </form>
+    </div>
+    <% if (typeof userId !== 'undefined') { %>
+    <nav class="masthead-nav">
+      <a class="active" style="color:#777" href="/">Home</a>
+    </nav>
+    <% } %>
+  </div>
+</header>
+<div class="container">
