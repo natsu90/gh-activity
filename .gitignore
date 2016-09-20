@@ -2,3 +2,5 @@
 node_modules/
 *.log
 bajet-51ff0f4e8aad.json
+*.csv
+*.csv.gz

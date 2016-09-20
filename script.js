@@ -87,17 +87,17 @@ var profile = Vue.component('profile', {
 var periods = Vue.component('periods', {
 	template: '#periods',
 	data: function() {
-		var format = 'YYYY-MM-DD',
-			current_period = moment().format(format);
+		var format = 'YYYY-MM-DD HH',
+			current_period = moment().utc().format(format);
 			store.setPeriod(current_period);
 		return {
 			periods: [
 				{value: current_period, text: 'today'},
-				{value: moment().subtract(1, 'week').format(format), text: '1 week'},
-				{value: moment().subtract(1, 'month').format(format), text: '1 month'},
-				{value: moment().subtract(3, 'months').format(format), text: '3 months'},
-				{value: moment().subtract(6, 'months').format(format), text: '6 months'},
-				{value: moment().subtract(1, 'year').format(format), text: '1 year'}
+				{value: moment().utc().subtract(1, 'week').format(format), text: '1 week'},
+				{value: moment().utc().subtract(1, 'month').format(format), text: '1 month'},
+				{value: moment().utc().subtract(3, 'months').format(format), text: '3 months'},
+				{value: moment().utc().subtract(6, 'months').format(format), text: '6 months'},
+				{value: moment().utc().subtract(1, 'year').format(format), text: '1 year'}
 			],
 			sharedState: store.state
 		}

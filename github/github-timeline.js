@@ -40,16 +40,16 @@ function Timeline(projectId, projectKeyFile, options) {
 		importQuery: function(startDate, endDate, dbDetail, cb) {
 			async.waterfall([
 				function(callback) {
-					timeline.startQuery(startDate, endDate, callback);
+					startQuery(startDate, endDate, callback);
 				},
 				function(tableName, callback) {
-					timeline.exportQuery(tableName, callback);
+					exportQuery(tableName, callback);
 				},
 				function(tableName, callback) {
-					timeline.download(tableName, callback);
+					download(tableName, callback);
 				},
 				function(fileNames, callback) {
-					timeline.importData(fileNames, dbDetail, callback);
+					importData(fileNames, dbDetail, callback);
 				}
 			], function(err) {
 				if (err) cb(err);
