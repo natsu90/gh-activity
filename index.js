@@ -69,7 +69,7 @@ githubOAuth.on('error', function(err) {
 })
 
 app.get('/login', function(req, res) {
-  res.cookie('github-redirect', req.headers.referer);
+  // res.cookie('github-redirect', req.headers.referer);
   return githubOAuth.login(req, res);
 });
 
@@ -78,9 +78,9 @@ app.get('/callback', function(req, res) {
     if (err) return res.json(err)
     
     res.cookie('github-token', result.access_token);
-    var redirect = req.cookies['github-redirect'];
+    /*var redirect = req.cookies['github-redirect'];
     if (redirect)
-      return res.redirect(redirect);
+      return res.redirect(redirect);*/
     return res.redirect('/');
   });
 });
