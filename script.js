@@ -88,11 +88,11 @@ var periods = Vue.component('periods', {
 	template: '#periods',
 	data: function() {
 		var format = 'YYYY-MM-DD HH',
-			current_period = moment().utc().format(format);
+			current_period = moment().utc().subtract(1, 'day').format(format);
 			store.setPeriod(current_period);
 		return {
 			periods: [
-				{value: current_period, text: 'today'},
+				{value: current_period, text: '24 hours'},
 				{value: moment().utc().subtract(1, 'week').format(format), text: '1 week'},
 				{value: moment().utc().subtract(1, 'month').format(format), text: '1 month'},
 				{value: moment().utc().subtract(3, 'months').format(format), text: '3 months'},
