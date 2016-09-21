@@ -26,7 +26,7 @@ setup `.env` & `gcloud.json` file
 `sudo crontab -e`
 
 ```
-0 1 * * * /usr/bin/node /var/www/html/gh-activity/cli/scheduled.js
+0 1 * * * cd /var/www/html/gh-activity && /usr/bin/node cli/scheduled.js >> /var/log/gh-activity-daily.log
 ```
 
 ### Supervisor
