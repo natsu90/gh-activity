@@ -58,7 +58,7 @@
       <li class="vcard-detail py-1 css-truncate css-truncate-target" v-if="user.company"><span class="octicon octicon-organization"></span><div v-text="user.company"></div></li>
       <li class="vcard-detail py-1 css-truncate css-truncate-target" :title=user.location v-if="user.location"><span class="octicon octicon-location"></span>{{ user.location }}</li>
       <li class="vcard-detail py-1 css-truncate css-truncate-target" v-if="user.email"><span class="octicon octicon-mail"></span><a href="mailto:{{ user.email }}" v-text="user.email"></a></li>
-      <li class="vcard-detail py-1 css-truncate css-truncate-target" v-if="user.blog"><span class="octicon octicon-link"></span><a href="http://namial.us" class="url" rel="nofollow me" v-text="user.blog"></a></li>
+      <li class="vcard-detail py-1 css-truncate css-truncate-target" v-if="user.blog"><span class="octicon octicon-link"></span><a :href=user.blog class="url" rel="nofollow me" v-text="user.blog"></a></li>
       <li class="vcard-detail py-1 css-truncate css-truncate-target"><span class="octicon octicon-clock"></span><span class="join-label">Joined on </span><local-time class="join-date" :datetime=user.created_at day="numeric" month="short" year="numeric" :title=user.created_at v-text="moment(user.created_at).format('MMM DD, YYYY')"></local-time></li>
     </ul>
 
